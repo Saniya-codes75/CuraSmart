@@ -1,0 +1,44 @@
+{% extends 'hospital/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row g-4">
+        
+        <div class="col-md-5">
+            <div class="glass-card p-4 border-start border-danger border-5">
+                <h2 class="text-white mb-3"><i class="fas fa-ambulance me-2"></i>Emergency</h2>
+                <p class="text-white-50">In case of a medical emergency, please contact our 24/7 helpline immediately.</p>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <a href="tel:102" class="btn btn-danger py-3 fw-bold">
+                        <i class="fas fa-phone-alt me-2"></i>Call Ambulance (102)
+                    </a>
+                    <div class="p-3 bg-white bg-opacity-10 rounded-3 mt-2 text-white text-center">
+                        <small class="d-block text-white-50">Local Kanpur Emergency:</small>
+                        <strong>+91 512-XXXXXXX</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="glass-card p-4">
+                <h2 class="text-white mb-3">Patient Feedback</h2>
+                <p class="text-white-50">How can we improve CuraSmart? Let us know your thoughts.</p>
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" name="subject" class="form-control bg-transparent text-white border-secondary" placeholder="Subject" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="message" class="form-control bg-transparent text-white border-secondary" rows="5" placeholder="Your Message..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary-glass w-100 py-2">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

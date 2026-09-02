@@ -1,0 +1,35 @@
+{% extends 'hospital/base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-white">
+    <h2>My Appointments</h2>
+    <div class="glass-card p-4 mt-3">
+        <table class="table text-white">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td>Dr. {{ appt.doctor.name }}</td>
+                    <td>{{ appt.date }}</td>
+                    <td>{{ appt.time_slot }}</td>
+                    <td>
+                        <span class="badge {% if appt.status == 'Confirmed' %}bg-success{% else %}bg-warning{% endif %}">
+                            {{ appt.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No appointments found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

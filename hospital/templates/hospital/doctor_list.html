@@ -1,0 +1,89 @@
+{% extends 'hospital/base.html' %}
+
+{% block title %}Doctors - CuraSmart{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-white" style="text-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+            Find a Specialist
+        </h1>
+        <p class="text-white-50">Book your virtual token in seconds</p>
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <form method="GET" action="{% url 'doctor_list' %}" class="d-flex gap-2 p-2 glass-card">
+                <input type="text" name="search" class="form-control bg-transparent border-0 text-white placeholder-light" 
+                       placeholder="Search by name or specialty..." style="box-shadow: none;">
+                <button type="submit" class="btn btn-primary-glass px-4">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for doc in doctors %}
+        <div class="col-md-6 col-lg-4">
+            <div class="glass-card p-4 h-100 d-flex flex-column">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-white d-flex align-items-center justify-content-center me-3" 
+                         style="width: 50px; height: 50px; color: #6d19fc; font-weight: bold; font-size: 1.2rem;">
+                        {{ doc.name|slice:":1" }}
+                    </div>
+                    <div>
+                        <h4 class="m-0 text-white">Dr. {{ doc.name }}</h4>
+                        <span class="badge rounded-pill bg-info text-dark" style="font-size: 0.7rem;">
+                            {{ doc.specialty }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-white-50 small mb-1">
+                        <i class="fas fa-certificate me-2"></i>{{ doc.experience }} Years Experience
+                    </p>
+                    <p class="text-white-50 small">
+                        <i class="fas fa-check-circle me-2"></i>Verified Specialist
+                    </p>
+                </div>
+
+                <div class="mt-auto">
+                    {% if doc.is_available %}
+                        <a href="{% url 'generate_token' doc.id %}" class="btn btn-primary-glass w-100">
+                            Get Token
+                        </a>
+                    {% else %}
+                        <button class="btn btn-secondary w-100 disabled" style="opacity: 0.5;">
+                            Offline
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="glass-card p-5 d-inline-block">
+                <h3 class="text-white">No specialists found.</h3>
+                <p class="text-white-50">Try searching for a different name or specialty.</p>
+                <a href="{% url 'doctor_list' %}" class="btn btn-sm btn-outline-light">Clear Search</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="alert alert-danger mt-5 d-flex justify-content-between align-items-center">
+    <div>
+        <strong>Emergency in Kanpur?</strong> Call local medical help immediately.
+    </div>
+    <a href="tel:108" class="btn btn-danger">Call 108</a>
+</div>
+
+<style>
+    /* Styling the placeholder text for the search bar */
+    .placeholder-light::placeholder {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+</style>
+{% endblock %}

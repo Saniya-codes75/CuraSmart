@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CuraSmart - BMI Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+
+        /* Category styles (NO ERROR NOW ✅) */
+        .Underweight {
+            border: 2px solid blue;
+            color: blue;
+        }
+
+        .Normal {
+            border: 2px solid green;
+            color: green;
+        }
+
+        .Overweight {
+            border: 2px solid orange;
+            color: orange;
+        }
+
+        .Obese {
+            border: 2px solid red;
+            color: red;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>BMI Calculator</h2>
+    <p>Enter your details below</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="number" step="0.1" name="weight" placeholder="Weight (kg)" required>
+        <input type="number" step="0.1" name="height" placeholder="Height (cm)" required>
+        <button type="submit" class="btn">Calculate Now</button>
+    </form>
+
+    {% if bmi %}
+    <div class="result-box {{ category }}">
+        <h3>{{ bmi }}</h3>
+        <p>Category: <strong>{{ category }}</strong></p>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'doctor_list' %}" class="back-link">
+        ← Back to Doctors
+    </a>
+</div>
+
+</body>
+</html>

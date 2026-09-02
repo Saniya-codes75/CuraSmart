@@ -1,0 +1,60 @@
+{% extends 'hospital/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-white fw-bold">
+            <i class="fas fa-ambulance me-2"></i>Available Ambulances
+        </h2>
+        <span class="badge bg-danger p-2 px-3 shadow">24/7 Emergency</span>
+    </div>
+
+    <div class="row">
+        {% for amb in ambulances %}
+        <div class="col-md-4 mb-4">
+            <div class="glass-card p-4 border-start border-danger border-5 latest-token-card">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h4 class="text-white fw-bold mb-0">{{ amb.vehicle_number }}</h4>
+                    <i class="fas fa-truck-medical text-danger fs-3"></i>
+                </div>
+                
+                <hr class="text-white-50">
+
+                <p class="text-white mb-2">
+                    <i class="fas fa-user-ninja me-2"></i><strong>Driver:</strong> {{ amb.driver_name }}
+                </p>
+                
+                <p class="text-white mb-4">
+                    <i class="fas fa-map-marker-alt me-2"></i><strong>Location:</strong> Kanpur Base
+                </p>
+                <p class="text-white-50" style="font-size: 0.8rem;">
+                  <i class="fas fa-clock me-1"></i> 
+                     Last updated: {{ amb.updated_at|timesince }} ago
+                </p>
+
+                <a href="tel:{{ amb.driver_contact }}" class="btn btn-danger w-100 fw-bold shadow-sm py-2">
+                    <i class="fas fa-phone-alt me-2"></i>Call {{ amb.driver_contact }}
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="glass-card p-5">
+                <h3 class="text-white">All ambulances are currently on mission.</h3>
+                <p class="text-white-50">Please contact the hospital emergency desk at +91 99999-88888</p>
+            </div>
+        </div>
+        <div class="mt-3 p-2 rounded" style="background: rgba(255, 255, 255, 0.05);">
+            <p class="text-white mb-1" style="font-size: 0.85rem;">
+                 <i class="fas fa-clock text-warning me-2"></i>
+                 <strong>ETA:</strong> {{ amb.estimated_arrival }}
+            </p>
+            <p class="text-white-50 mb-0" style="font-size: 0.75rem;">
+               <i class="fas fa-history me-2"></i>
+                  Last synced: {{ amb.last_updated|timesince }} ago
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

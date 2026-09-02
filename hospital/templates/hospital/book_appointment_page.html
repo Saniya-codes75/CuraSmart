@@ -1,0 +1,49 @@
+{% extends 'hospital/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="glass-card p-5 text-white shadow-lg" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                <h2 class="text-center mb-4">Book Your Appointment</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Select Doctor</label>
+                        <select name="doctor_id" class="form-control bg-transparent text-white" required>
+                            <option value="" class="text-dark">-- Choose a Specialist --</option>
+                            {% for doc in doctors %}
+                                <option value="{{ doc.id }}" class="text-dark">Dr. {{ doc.name }} ({{ doc.specialty }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Preferred Date</label>
+                            <input type="date" name="date" class="form-control bg-transparent text-white" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Time Slot</label>
+                            <select name="time_slot" class="form-control bg-transparent text-white" required>
+                                <option value="Morning" class="text-dark">Morning (10:00 AM - 1:00 PM)</option>
+                                <option value="Evening" class="text-dark">Evening (5:00 PM - 8:00 PM)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Describe Symptoms</label>
+                        <textarea name="symptoms" class="form-control bg-transparent text-white" rows="3" placeholder="e.g. Fever, Headache..."></textarea>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg w-100" style="border-radius: 30px; background: linear-gradient(45deg, #007bff, #00d4ff);">Confirm Booking</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
